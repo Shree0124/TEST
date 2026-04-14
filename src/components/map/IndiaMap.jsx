@@ -54,13 +54,13 @@ const STATE_CENTERS = {
   'West Bengal':       { lat: 23.8,  lng: 87.9,  zoom: 7 },
 };
  
-const QUICK_REGIONS = [
-  { label: 'Western Ghats', lat: 12.5, lng: 75.5, zoom: 7 },
-  { label: 'Himalayan',     lat: 30.5, lng: 78.5, zoom: 7 },
-  { label: 'Deccan',        lat: 17.0, lng: 78.0, zoom: 7 },
-  { label: 'Northeast',     lat: 26.0, lng: 93.0, zoom: 7 },
-  { label: 'Reset',         lat: 22.5, lng: 82.5, zoom: 5 },
-];
+// const QUICK_REGIONS = [
+//   { label: 'Western Ghats', lat: 12.5, lng: 75.5, zoom: 7 },
+//   { label: 'Himalayan',     lat: 30.5, lng: 78.5, zoom: 7 },
+//   { label: 'Deccan',        lat: 17.0, lng: 78.0, zoom: 7 },
+//   { label: 'Northeast',     lat: 26.0, lng: 93.0, zoom: 7 },
+//   { label: 'Reset',         lat: 22.5, lng: 82.5, zoom: 5 },
+// ];
  
 const TILE_LAYERS = {
   Dark: {
@@ -124,7 +124,7 @@ export default function IndiaMap({ sightings, loading }) {
   };
  
   // Stats derived from currently visible sightings
-  const confirmedCount = sightings.filter(s => s.confidence === 'Confirmed').length;
+  // const confirmedCount = sightings.filter(s => s.confidence === 'Confirmed').length;
   const grouped   = sightings.reduce((a, s) => { a[s.region] = (a[s.region] || 0) + 1; return a; }, {});
   const topRegion = Object.entries(grouped).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—';
  

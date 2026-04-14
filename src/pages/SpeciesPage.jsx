@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useApp, wikiImageUrl } from '../context/AppContext';
+import { useApp } from '../context/AppContext';
 import Loader from '../components/shared/Loader';
 import IndiaMap from '../components/map/IndiaMap';
 
@@ -170,81 +170,81 @@ function SpeciesCard({ s, isSelected, onClick }) {
 // IMAGE GALLERY GRID (shows all images from filtered species)
 // ─────────────────────────────────────────────────────────────────────────────
 
-function ImageGalleryGrid({ images, onImageClick }) {
-  if (!images || images.length === 0) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--text3)' }}>
-        <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>📸</div>
-        <p style={{ fontFamily: 'var(--ff)', fontSize: '1rem' }}>No images available for selected filters.</p>
-      </div>
-    );
-  }
+// function ImageGalleryGrid({ images, onImageClick }) {
+//   if (!images || images.length === 0) {
+//     return (
+//       <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--text3)' }}>
+//         <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>📸</div>
+//         <p style={{ fontFamily: 'var(--ff)', fontSize: '1rem' }}>No images available for selected filters.</p>
+//       </div>
+//     );
+//   }
 
-  return (
-    <>
-      <div style={{ padding: '0 1.5rem', marginBottom: '1rem' }}>
-        <span style={{ fontSize: '.7rem', textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text3)' }}>
-          📸 Wikimedia Commons · {images.length} images from {new Set(images.map(i => i.speciesId)).size} species
-        </span>
-      </div>
+//   return (
+//     <>
+//       <div style={{ padding: '0 1.5rem', marginBottom: '1rem' }}>
+//         <span style={{ fontSize: '.7rem', textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text3)' }}>
+//           📸 Wikimedia Commons · {images.length} images from {new Set(images.map(i => i.speciesId)).size} species
+//         </span>
+//       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(clamp(200px, 25vw, 300px), 1fr))', gap: '1rem', padding: '0 1.5rem 2rem' }}>
-        {images.map((img, idx) => {
-          const imageSource = img.file_url || img.img_name;
-          const thumbUrl = imageSource;
-          const fullUrl = imageSource;
-          const caption = (img.img_name || 'Image').replace(/_/g, ' ').replace(/\.(jpg|jpeg|png|webp)$/i, '');
+//       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(clamp(200px, 25vw, 300px), 1fr))', gap: '1rem', padding: '0 1.5rem 2rem' }}>
+//         {images.map((img, idx) => {
+//           const imageSource = img.file_url || img.img_name;
+//           const thumbUrl = imageSource;
+//           const fullUrl = imageSource;
+//           const caption = (img.img_name || 'Image').replace(/_/g, ' ').replace(/\.(jpg|jpeg|png|webp)$/i, '');
 
-          return (
-            <div
-              key={`${img.speciesId}-${idx}`}
-              style={{
-                borderRadius: '8px', overflow: 'hidden',
-                background: `${img.speciesColor}14`,
-                border: `1px solid ${img.speciesColor}30`,
-                cursor: 'pointer',
-                transition: 'transform .2s ease, box-shadow .2s ease',
-              }}
-              onClick={() => onImageClick({ url: fullUrl, caption, species: img.speciesName })}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.03)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(82,201,123,.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-              title={`${img.speciesName} • ${caption}`}
-            >
-              {thumbUrl ? (
-                <img
-                  src={thumbUrl}
-                  alt={caption}
-                  style={{ width: '100%', height: 'clamp(160px, 20vw, 220px)', objectFit: 'cover', display: 'block' }}
-                  loading="lazy"
-                  onError={() => console.warn('[Gallery Image Error]', imageSource, thumbUrl)}
-                  onLoad={() => console.log('[Gallery Image Loaded]', imageSource)}
-                />
-              ) : (
-                <div style={{ width: '100%', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${img.speciesColor}08` }}>
-                  <span style={{ fontSize: '2rem', opacity: 0.5 }}>🦋</span>
-                </div>
-              )}
-              <div style={{ padding: '.6rem', fontSize: '.7rem', color: 'var(--text3)', lineHeight: 1.4 }}>
-                <div style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '.2rem', fontSize: '.75rem' }}>
-                  {img.speciesName.substring(0, 25)}
-                </div>
-                <div style={{ opacity: 0.8 }}>
-                  {caption.substring(0, 40)}{caption.length > 40 ? '...' : ''}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
-}
+//           return (
+//             <div
+//               key={`${img.speciesId}-${idx}`}
+//               style={{
+//                 borderRadius: '8px', overflow: 'hidden',
+//                 background: `${img.speciesColor}14`,
+//                 border: `1px solid ${img.speciesColor}30`,
+//                 cursor: 'pointer',
+//                 transition: 'transform .2s ease, box-shadow .2s ease',
+//               }}
+//               onClick={() => onImageClick({ url: fullUrl, caption, species: img.speciesName })}
+//               onMouseEnter={(e) => {
+//                 e.currentTarget.style.transform = 'scale(1.03)';
+//                 e.currentTarget.style.boxShadow = '0 4px 16px rgba(82,201,123,.15)';
+//               }}
+//               onMouseLeave={(e) => {
+//                 e.currentTarget.style.transform = 'scale(1)';
+//                 e.currentTarget.style.boxShadow = 'none';
+//               }}
+//               title={`${img.speciesName} • ${caption}`}
+//             >
+//               {thumbUrl ? (
+//                 <img
+//                   src={thumbUrl}
+//                   alt={caption}
+//                   style={{ width: '100%', height: 'clamp(160px, 20vw, 220px)', objectFit: 'cover', display: 'block' }}
+//                   loading="lazy"
+//                   onError={() => console.warn('[Gallery Image Error]', imageSource, thumbUrl)}
+//                   onLoad={() => console.log('[Gallery Image Loaded]', imageSource)}
+//                 />
+//               ) : (
+//                 <div style={{ width: '100%', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${img.speciesColor}08` }}>
+//                   <span style={{ fontSize: '2rem', opacity: 0.5 }}>🦋</span>
+//                 </div>
+//               )}
+//               <div style={{ padding: '.6rem', fontSize: '.7rem', color: 'var(--text3)', lineHeight: 1.4 }}>
+//                 <div style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '.2rem', fontSize: '.75rem' }}>
+//                   {img.speciesName.substring(0, 25)}
+//                 </div>
+//                 <div style={{ opacity: 0.8 }}>
+//                   {caption.substring(0, 40)}{caption.length > 40 ? '...' : ''}
+//                 </div>
+//               </div>
+//             </div>
+//           );
+//         })}
+//       </div>
+//     </>
+//   );
+// }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SPECIES PAGE

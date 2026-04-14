@@ -1,7 +1,7 @@
 
 
-import { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
-import React, { useState, useRef, useEffect as useEffectAlias } from "react";
+import { useEffect, } from 'react';
+import React, { useState  } from "react";
 import Sidebar from "./components/layout/Sidebar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -10,11 +10,10 @@ import { Provider, useApp } from "./context/AppContext";
 import SpeciesPage from './pages/SpeciesPage';
 import HomePage from  './pages/HomePage';
 // ─── Constants ────────────────────────────────────────────────────────────────
-const WIKI_URL = "https://meta.wikimedia.org/wiki/Wiki_Loves_Butterfly";
-const STATES = ["All States","Kerala","Karnataka","Tamil Nadu","Maharashtra","Himachal Pradesh","Uttarakhand","Rajasthan","Arunachal Pradesh","West Bengal","Assam","Meghalaya","Sikkim","Goa"];
-const COUNTRIES = ["All Countries","India","Sri Lanka","Nepal","Bhutan","Bangladesh","Myanmar"];
-const PER_PAGE = 4;
-const VISIBLE_PAGES = 3;
+// const WIKI_URL = "https://meta.wikimedia.org/wiki/Wiki_Loves_Butterfly";
+
+// const PER_PAGE = 4;
+// const VISIBLE_PAGES = 3;
 
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
@@ -94,10 +93,10 @@ const CloseBtn = ({ onClick }) => (
   </button>
 );
 
-const StatusBadge = ({ s }) => {
-  const m = {"Least Concern":"t-green","Vulnerable":"t-amber","Endangered":"t-red","Near Threatened":"t-blue"};
-  return <span className={`tag ${m[s]||"t-blue"}`}>{s}</span>;
-};
+// const StatusBadge = ({ s }) => {
+//   const m = {"Least Concern":"t-green","Vulnerable":"t-amber","Endangered":"t-red","Near Threatened":"t-blue"};
+//   return <span className={`tag ${m[s]||"t-blue"}`}>{s}</span>;
+// };
 
 const Avatar = ({ i, c, size=52 }) => (
   <div style={{width:size,height:size,borderRadius:"50%",background:`${c}18`,border:`2px solid ${c}44`,display:"flex",alignItems:"center",justifyContent:"center",color:c,fontWeight:600,fontSize:size*.32,fontFamily:"var(--ff)",flexShrink:0}}>{i}</div>
@@ -108,60 +107,60 @@ const Dot = ({ c }) => (
 );
 
 // ─── Global Search ────────────────────────────────────────────────────────────
-function GlobalSearch() {
-  const { state, dispatch } = useApp();
-  const [open, setOpen] = useState(false);
-  const ref = useRef();
+// function GlobalSearch() {
+//   const { state, dispatch } = useApp();
+//   const [open, setOpen] = useState(false);
+//   const ref = useRef();
 
-  useEffect(() => {
-    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, []);
+//   useEffect(() => {
+//     const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+//     document.addEventListener("mousedown", h);
+//     return () => document.removeEventListener("mousedown", h);
+//   }, []);
 
-  const results = state.categories.flatMap(c => c.species).filter(s => {
-    if (!state.search || state.search.length < 2) return false;
-    const q = state.search.toLowerCase();
-    return s.name.toLowerCase().includes(q) || s.scientific.toLowerCase().includes(q);
-  }).slice(0, 6);
+//   const results = state.categories.flatMap(c => c.species).filter(s => {
+//     if (!state.search || state.search.length < 2) return false;
+//     const q = state.search.toLowerCase();
+//     return s.name.toLowerCase().includes(q) || s.scientific.toLowerCase().includes(q);
+//   }).slice(0, 6);
 
-  return (
-    <div ref={ref} style={{position:"relative",minWidth:240,maxWidth:320,flex:1}}>
-      <div style={{position:"relative"}}>
-        <span style={{position:"absolute",left:".75rem",top:"50%",transform:"translateY(-50%)",opacity:.4,fontSize:".9rem"}}>🔍</span>
-        <input
-          className="inp"
-          placeholder="Search species…"
-          value={state.search}
-          style={{paddingLeft:"2.1rem",borderRadius:50}}
-          onChange={e => { dispatch({type:"SET_SEARCH",v:e.target.value}); setOpen(true); }}
-          onFocus={() => setOpen(true)}
-        />
-      </div>
-      {open && state.search.length >= 2 && (
-        <div style={{position:"absolute",top:"calc(100% + 6px)",left:0,right:0,background:"#0d1f12",border:"1px solid var(--border2)",borderRadius:14,overflow:"hidden",zIndex:200,boxShadow:"0 20px 40px rgba(0,0,0,.5)",animation:"slideDown .15s ease"}}>
-          {results.length === 0 ? (
-            <div style={{padding:"1.2rem",textAlign:"center",color:"var(--text3)",fontSize:".85rem"}}>No results</div>
-          ) : results.map(s => (
-            <div
-              key={s.id}
-              onClick={() => { dispatch({type:"SEL_SPECIES",v:s}); setOpen(false); dispatch({type:"SET_SEARCH",v:""}); }}
-              style={{padding:".75rem 1.1rem",cursor:"pointer",display:"flex",alignItems:"center",gap:".75rem",borderBottom:"1px solid var(--border)",transition:"background .15s"}}
-              onMouseEnter={e => e.currentTarget.style.background = "var(--greenGlow)"}
-              onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-            >
-              🦋
-              <div>
-                <div style={{fontSize:".88rem",color:"var(--text)"}}>{s.name}</div>
-                <div style={{fontSize:".75rem",color:"var(--text3)"}}>{s.scientific} · {s.region}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+//   return (
+//     <div ref={ref} style={{position:"relative",minWidth:240,maxWidth:320,flex:1}}>
+//       <div style={{position:"relative"}}>
+//         <span style={{position:"absolute",left:".75rem",top:"50%",transform:"translateY(-50%)",opacity:.4,fontSize:".9rem"}}>🔍</span>
+//         <input
+//           className="inp"
+//           placeholder="Search species…"
+//           value={state.search}
+//           style={{paddingLeft:"2.1rem",borderRadius:50}}
+//           onChange={e => { dispatch({type:"SET_SEARCH",v:e.target.value}); setOpen(true); }}
+//           onFocus={() => setOpen(true)}
+//         />
+//       </div>
+//       {open && state.search.length >= 2 && (
+//         <div style={{position:"absolute",top:"calc(100% + 6px)",left:0,right:0,background:"#0d1f12",border:"1px solid var(--border2)",borderRadius:14,overflow:"hidden",zIndex:200,boxShadow:"0 20px 40px rgba(0,0,0,.5)",animation:"slideDown .15s ease"}}>
+//           {results.length === 0 ? (
+//             <div style={{padding:"1.2rem",textAlign:"center",color:"var(--text3)",fontSize:".85rem"}}>No results</div>
+//           ) : results.map(s => (
+//             <div
+//               key={s.id}
+//               onClick={() => { dispatch({type:"SEL_SPECIES",v:s}); setOpen(false); dispatch({type:"SET_SEARCH",v:""}); }}
+//               style={{padding:".75rem 1.1rem",cursor:"pointer",display:"flex",alignItems:"center",gap:".75rem",borderBottom:"1px solid var(--border)",transition:"background .15s"}}
+//               onMouseEnter={e => e.currentTarget.style.background = "var(--greenGlow)"}
+//               onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+//             >
+//               🦋
+//               <div>
+//                 <div style={{fontSize:".88rem",color:"var(--text)"}}>{s.name}</div>
+//                 <div style={{fontSize:".75rem",color:"var(--text3)"}}>{s.scientific} · {s.region}</div>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 // ─── Home Page ────────────────────────────────────────────────────────────────
 // function HomePage() {
@@ -348,89 +347,7 @@ function GlobalSearch() {
 //   );
 // }
 
-// ─── India Map ────────────────────────────────────────────────────────────────
-function IndiaMap({ sightings, loading }) {
-  const { state, dispatch } = useApp();
-  const [hovered, setHovered] = useState(null);
 
-  const dotPositions = sightings.map(s => {
-    const cx = ((s.lng - 68) / (97 - 68)) * 390 + 25;
-    const cy = ((37 - s.lat) / (37 - 8))  * 445 + 25;
-    return { ...s, cx, cy };
-  });
-
-  return (
-    <div style={{background:"var(--bg3)",border:"1px solid var(--border)",borderRadius:18,padding:"1.5rem"}}>
-      <div style={{display:"flex",gap:".75rem",marginBottom:"1.25rem",flexWrap:"wrap",alignItems:"center"}}>
-        <select className="sel" value={state.mapFilter.country} onChange={e => dispatch({type:"MAP_FILTER",v:{country:e.target.value}})}>
-          {COUNTRIES.map(c => <option key={c}>{c}</option>)}
-        </select>
-        <select className="sel" value={state.mapFilter.state} onChange={e => dispatch({type:"MAP_FILTER",v:{state:e.target.value}})}>
-          {STATES.map(s => <option key={s}>{s}</option>)}
-        </select>
-        <span style={{fontSize:".78rem",color:"var(--text3)",marginLeft:"auto"}}>{sightings.length} sightings</span>
-      </div>
-      <svg viewBox="0 0 440 495" style={{width:"100%",maxHeight:420,display:"block"}}>
-        {loading ? (
-          <text x="220" y="247" textAnchor="middle" fill="var(--text3)" fontSize="14">Loading…</text>
-        ) : (
-          <>
-            <path
-              d="M180 25 L200 22 L225 28 L248 35 L268 45 L285 60 L298 78 L308 95 L315 115 L318 135 L316 155 L310 172 L308 190 L310 208 L315 225 L322 242 L330 258 L338 272 L345 285 L352 300 L356 318 L355 336 L348 352 L338 366 L325 378 L310 388 L295 396 L280 402 L265 406 L252 410 L240 414 L228 410 L215 403 L202 396 L190 388 L178 378 L167 366 L158 352 L152 336 L150 318 L152 300 L158 285 L164 272 L170 258 L176 242 L180 225 L183 208 L184 190 L182 172 L178 155 L175 135 L176 115 L180 95 L185 78 L188 60 L184 45 L180 30 Z"
-              fill="rgba(82,201,123,.05)" stroke="rgba(82,201,123,.25)" strokeWidth="1.5"
-            />
-            <ellipse cx="340" cy="450" rx="22" ry="28" fill="rgba(82,201,123,.04)" stroke="rgba(82,201,123,.2)" strokeWidth="1"/>
-            {dotPositions.map(d => {
-              const isConf = d.confidence === "Confirmed";
-              const isHigh = d.confidence === "High";
-              const dotC   = isConf ? "#52c97b" : isHigh ? "#60a5fa" : "#fbbf24";
-              return (
-                <g key={d.id} onMouseEnter={() => setHovered(d)} onMouseLeave={() => setHovered(null)} style={{cursor:"pointer"}}>
-                  <circle cx={d.cx} cy={d.cy} r="14" fill={`${dotC}08`}/>
-                  <circle cx={d.cx} cy={d.cy} r="7"  fill={`${dotC}22`} stroke={dotC} strokeWidth="1.5"/>
-                  <circle cx={d.cx} cy={d.cy} r="3.5" fill={dotC}/>
-                </g>
-              );
-            })}
-            {hovered && (
-              <g>
-                <rect x={Math.min(hovered.cx - 5, 340)} y={hovered.cy - 52} width="130" height="46" rx="8" fill="#0d1f12" stroke="var(--border2)" strokeWidth="1"/>
-                <text x={Math.min(hovered.cx - 5, 340) + 10} y={hovered.cy - 32} fill="var(--text)"  fontSize="10" fontFamily="DM Sans,sans-serif">{hovered.species}</text>
-                <text x={Math.min(hovered.cx - 5, 340) + 10} y={hovered.cy - 16} fill="var(--text3)" fontSize="9"  fontFamily="DM Sans,sans-serif">{hovered.region} · {hovered.date}</text>
-              </g>
-            )}
-            <g transform="translate(18,420)" style={{fontFamily:"DM Sans,sans-serif"}}>
-              {[["#52c97b","Confirmed"],["#60a5fa","High"],["#fbbf24","Probable"]].map(([c, l], i) => (
-                <g key={l} transform={`translate(${i * 82},0)`}>
-                  <circle cx="5" cy="5" r="4" fill={c}/>
-                  <text x="13" y="9" fill="var(--text3)" fontSize="9">{l}</text>
-                </g>
-              ))}
-            </g>
-          </>
-        )}
-      </svg>
-      <div style={{marginTop:"1rem"}}>
-        <div style={{fontSize:".78rem",color:"var(--text3)",marginBottom:".6rem",letterSpacing:".06em"}}>RECENT SIGHTINGS</div>
-        <div style={{display:"flex",flexDirection:"column",gap:".4rem",maxHeight:200,overflowY:"auto"}}>
-          {sightings.map(s => (
-            <div
-              key={s.id}
-              style={{display:"flex",alignItems:"center",gap:".75rem",padding:".5rem .75rem",borderRadius:9,background:"rgba(255,255,255,.02)",transition:"background .15s",cursor:"default"}}
-              onMouseEnter={e => e.currentTarget.style.background = "var(--greenGlow)"}
-              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.02)"}
-            >
-              <Dot c={s.confidence==="Confirmed" ? "#52c97b" : s.confidence==="High" ? "#60a5fa" : "#fbbf24"}/>
-              <div style={{flex:1,fontSize:".82rem",color:"var(--text)"}}>{s.species}</div>
-              <div style={{fontSize:".74rem",color:"var(--text3)"}}>{s.region}</div>
-              <div style={{fontSize:".72rem",color:"var(--text3)"}}>{s.date}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ─── Taxon Tree ───────────────────────────────────────────────────────────────
 function TaxonTree() {
@@ -798,7 +715,7 @@ function AboutPage() {
 
 // ─── Menu Button ─────────────────────────────────────────────────────────────
 function MenuButton() {
-  const { state, dispatch } = useApp();
+  const { dispatch } = useApp();
   const [open, setOpen] = useState(false);
 
   return (
