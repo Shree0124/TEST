@@ -8,7 +8,28 @@ import IndiaMap from '../components/map/IndiaMap';
 // IMAGE GALLERY
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────────────────────
+// CLOSE BUTTON
+// ─────────────────────────────────────────────────────────────────────────────
 
+function CloseBtn({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: 'absolute', top: '1rem', right: '1rem',
+        background: 'rgba(255,255,255,.08)', border: '1px solid var(--border)',
+        color: 'var(--text2)', fontSize: '1.1rem',
+        width: 32, height: 32, borderRadius: '50%',
+        cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        lineHeight: 1,
+      }}
+      aria-label="Close"
+    >
+      ✕
+    </button>
+  );
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SPECIES DETAIL PANEL
