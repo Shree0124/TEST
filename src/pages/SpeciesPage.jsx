@@ -344,7 +344,7 @@ export default function SpeciesPage() {
         </div>
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '.4rem' }}>
-          <button className="btn-sm" onClick={() => setFilterOpen(true)}>🔍 Filter</button>
+          {/* <button className="btn-sm" onClick={() => setFilterOpen(true)}>🔍 Filter</button> */}
           {[['grid','⊞ Grid'],['map','🗺 Map']].map(([v,l]) => (
             <button key={v} className="btn-sm"
               style={{ background: view === v ? 'rgba(82,201,123,.2)' : 'var(--greenGlow)' }}
